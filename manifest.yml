@@ -4,3 +4,5 @@ applications:
   buildpack: go_buildpack
   stack: cflinuxfs2
   no-route: true
+  env:
+    GOPACKAGENAME: dingo-watch-cluster-changes
