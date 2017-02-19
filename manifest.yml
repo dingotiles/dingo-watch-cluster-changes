@@ -1,0 +1,6 @@
+applications:
+- name: dingo-watch-cluster-changes
+  memory: 64M
+  buildpack: go_buildpack
+  stack: cflinuxfs2
+  no-route: true
