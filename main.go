@@ -57,6 +57,12 @@ func main() {
 		fmt.Printf("hub: %s://%s%s\n", hubURL.Scheme, hubURL.Host, hubURL.Path)
 	}
 
+	watcherRootPath := os.Getenv("WATCH_ROOT_PATH")
+	if watcherRootPath == "" {
+		watcherRootPath = "/service/"
+	}
+	fmt.Println("watch:", watcherRootPath)
+
 	if errors {
 		os.Exit(1)
 	}
@@ -88,11 +94,12 @@ func main() {
 
 	kapi := client.NewKeysAPI(etcdclient)
 
-	watcher := kapi.Watcher("/service/", &client.WatcherOptions{Recursive: true})
+	watcher := kapi.Watcher(watcherRootPath, &client.WatcherOptions{Recursive: true})
 
-	node := regexp.MustCompile("^/service/(.*)/nodes/(.*)$")
+	node := regexp.MustCompile("/service/(.*)/nodes/(.*)$")
 	clusterNodes := map[string]ClusterNodeStatus{}
 
+	fmt.Printf("Watching '%s' for '%v'...\n", watcherRootPath, node)
 	for true {
 		resp, err := watcher.Next(context.TODO())
 

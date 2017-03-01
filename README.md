@@ -24,3 +24,7 @@ Required environment variables:
 
 * `ETCD_URI` - the backbone Etcd cluster used by all Docker containers/agents/patroni.
 * `HUB_URI` - an HTTP uri to the staging/prod hub API
+
+Optional:
+
+* `WATCH_ROOT_PATH` - by default watch for changes under `/service/` key path; if using etcd-cf-service-broker then change to `/service_instances/`
